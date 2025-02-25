@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Limit Exceeded</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 20%;
+        background-color: #f2f2f2;
+      }
+      h1 {
+        color: #d9534f;
+      }
+      .timer {
+        font-size: 2em;
+        color: #5bc0de;
+      }
+      p {
+        font-size: 1.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>You've Reached Your Time Limit</h1>
+    <p>You've spent the maximum allowed time on this website this hour.</p>
+    <p>Access will be restored in:</p>
+    <div class="timer" id="countdown">Loading...</div>
+
+    <script>
+      function getTimeUntilNextHour() {
+        const now = new Date();
+        const nextHour = new Date();
+        nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+        return nextHour - now;
+      }
+
+      function updateCountdown() {
+        const timeRemaining = getTimeUntilNextHour();
+        const minutes = Math.floor(timeRemaining / 60000);
+        const seconds = Math.floor((timeRemaining % 60000) / 1000);
+        const countdownElement = document.getElementById('countdown');
+        countdownElement.textContent = `${minutes}m ${seconds}s`;
+
+        setTimeout(updateCountdown, 1000);
+      }
+
+      updateCountdown();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Website Limits</title>
+    <style>
+      body {
+        width: 200px;
+        font-family: Arial, sans-serif;
+        margin: 10px;
+      }
+      input, button {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Set Website Limit</h2>
+    <label for="url">Website URL:</label>
+    <input type="text" id="url" placeholder="Enter URL">
+    <label for="limit">Limit in Minutes:</label>
+    <input type="number" id="limit" placeholder="Enter limit in minutes">
+    <button id="setLimit">Set Limit</button>
+
+    <script>
+      document.getElementById('setLimit').addEventListener('click', () => {
+        const url = document.getElementById('url').value;
+        const limit = parseInt(document.getElementById('limit').value, 10);
+        
+        if (url && limit > 0) {
+          chrome.runtime.getBackgroundPage((backgroundPage) => {
+            backgroundPage.updateUrlTimeLimits(url, limit);
+          });
+          alert(`Limit set for ${url} to ${limit} minutes`);
+        } else {
+          alert("Please enter a valid URL and time limit.");
+        }
+      });
+    </script>
+  </body>
+</html>
